@@ -15,7 +15,7 @@ BluetoothSerial SerialBT;
 unsigned long lastTelemetria = 0;
 
 // --- CONFIGURACIÓN DE UMBRALES ---
-const float UMBRAL_IMPACTO = 2.2;       
+const float UMBRAL_IMPACTO = 4.2;       
 const float UMBRAL_INCLINACION = 60.0;   // Grados máximos de desviación permitidos desde el encendido
 
 // --- VARIABLES DE CALIBRACIÓN INICIAL (POSICIÓN SAFE) ---
@@ -130,18 +130,17 @@ void loop() {
         gMaximoRegistrado = gTotal;
       }
 
-      // Si pasan los 4 segundos y la moto sigue desviada o sufriendo la anomalía
+      // 4 SEGS
       if (millis() - tiempoInicioAnomalia > TIEMPO_GRACIA) {
         Serial.println("!!! EMERGENCIA CONFIRMADA, ENVIANDO SEÑAL !!!");
         
-        // --- TU CADENA ORIGINAL EXACTA PARA TU APP DE REACT ---
+        
         SerialBT.print("EVENTO:CHOQUE,FUERZA:");
         SerialBT.print(gMaximoRegistrado);
         SerialBT.print(",LAT:");
         SerialBT.print(gps.location.lat(), 6);
         SerialBT.print(",LNG:");
         SerialBT.println(gps.location.lng(), 6);
-        // -----------------------------------------------------
 
         alertaEnProgreso = false; 
         delay(5000); 
