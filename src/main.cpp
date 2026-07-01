@@ -5,7 +5,6 @@
 #include "BluetoothSerial.h"
 
 const int MPU_ADDR = 0x68;
-const int MPU_ADDR = 0x68;
 
 #define RXD2 16
 #define TXD2 17
@@ -69,9 +68,7 @@ float         gAnterior            = 1.0;
 void leerG_Sensores(float &x, float &y, float &z) {
   Wire.beginTransmission(MPU_ADDR);
   Wire.write(0x3B);
-  Wire.write(0x3B);
   Wire.endTransmission(false);
-  Wire.requestFrom(MPU_ADDR, 6, true);
   Wire.requestFrom(MPU_ADDR, 6, true);
 
   int16_t ax = Wire.read() << 8 | Wire.read();
@@ -116,16 +113,11 @@ void setup() {
   neogps.begin(9600, SERIAL_8N1, RXD2, TXD2);
   SerialBT.begin("MotoGuard_ESP32");
 
-
   Wire.begin(21, 22);
   Wire.beginTransmission(MPU_ADDR);
   Wire.write(0x6B);
   Wire.write(0);
-  Wire.write(0x6B);
-  Wire.write(0);
   Wire.endTransmission(true);
-
-  delay(500);
 
   delay(500);
 
